@@ -1,5 +1,5 @@
 import Accordion from "../components/Accordion";
-function App() {
+function AccordionPage() {
   const items = [
     {
       id: "12scd",
@@ -27,4 +27,4 @@ function App() {
   );
 }
 
-export default App;
+export default AccordionPage;

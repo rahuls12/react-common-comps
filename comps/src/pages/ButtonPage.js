@@ -2,9 +2,9 @@ import Button from "../components/Button";
 import { Bs0SquareFill, BsAirplane } from "react-icons/bs";
 
 function ButtonPage() {
-  const handleClick=()=>{
-    console.log("handle click")
-  }
+  const handleClick = () => {
+    // console.log("handle click")
+  };
   return (
     <div>
       <div>
