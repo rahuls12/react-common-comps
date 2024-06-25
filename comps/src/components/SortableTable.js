@@ -1,28 +1,11 @@
 import { useState } from "react";
 import Table from "./Table";
 import { GoArrowDown, GoArrowUp } from "react-icons/go";
-export default function SortableTable(props) {
-  const [sortOrder, setSortOrder] = useState(null);
-  const [sortBy, setSortBy] = useState(null);
-  const { config, data } = props;
-  const handleClick = (label) => {
-    if (sortBy && label !== sortBy) {
-      setSortOrder("asc");
-      setSortBy(label);
-      return;
-    }
+import useSort from "../hooks/useSort";
 
-    if (sortOrder === null) {
-      setSortOrder("asc");
-      setSortBy(label);
-    } else if (sortOrder === "asc") {
-      setSortOrder("desc");
-      setSortBy(label);
-    } else if (sortOrder === "desc") {
-      setSortOrder(null);
-      setSortBy(null);
-    }
-  };
+export default function SortableTable(props) {
+  const { config, data } = props;
+  const { sortedData, handleClick, sortBy, sortOrder } = useSort(config, data);
   const updatedConfig = config.map((c) => {
     if (!c.sortValue) {
       return c;
@@ -45,29 +28,10 @@ export default function SortableTable(props) {
     };
   });
 
-  let sortedData = [...data];
-  if (sortOrder && sortBy) {
-    const { sortValue } = config.find((column) => column.label === sortBy);
-    sortedData.sort((a, b) => {
-      const valA = sortValue(a);
-      const valB = sortValue(b);
-      const reverseOrder = sortOrder === "asc" ? 1 : -1;
-      if (typeof valA === "string") {
-        return valA.localeCompare(valB) * reverseOrder;
-      } else {
-        return (valA - valB) * reverseOrder;
-      }
-    });
-  }
   // props has a config property in it but
   // it will be over written by config
   // declared post {...props}
-  return (
-    <div>
-      {sortOrder} - {sortBy}
-      <Table {...props} data={sortedData} config={updatedConfig} />
-    </div>
-  );
+  return <Table {...props} data={sortedData} config={updatedConfig} />;
 }
 
 function getIcons(label, sortBy, sortOrder) {
