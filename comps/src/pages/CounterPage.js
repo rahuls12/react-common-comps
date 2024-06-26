@@ -10,7 +10,7 @@ const reducer = (state, action) => {
     return { ...state, valueToAdd: action.payload };
   }
   if (action.type === "add-value") {
-    console.log(state)
+    console.log(state);
     return { count: state.count + state.valueToAdd, valueToAdd: 0 };
   }
 };
